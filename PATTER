@@ -1,0 +1,122 @@
+# title
+
+Give a presentation. Haven't made it yet. Let's do it together!
+
+# ImageMagick
+
+Ugly glare. Adjust levels (black point and white point).
+
+    $ convert IMG_4363.jpg -level 25%,45% IMG_4363.png
+
+# (continued)
+
+Another image. Let's run it again.
+
+    $ convert IMG_4365.jpg -level 25%,45% IMG_4365.png
+
+# make
+
+    $ vi Makefile
+    IMG_4363.png: IMG_4363.jpg
+    	convert IMG_4363.jpg -level 25%,45% IMG_4363.png
+
+    IMG_4365.png: IMG_4365.jpg
+    	convert IMG_4365.jpg -level 25%,45% IMG_4365.png
+    $ rm -f *.png
+    $ make IMG_4363.png
+
+# implicit rules
+
+    %.png: %.jpg
+    	convert $< -level 25%,45% $@
+    $ make IMG_4365.png
+
+# scrape fail
+
+Let's try scraping the RC calendar.
+
+    $ curl -Li https://www.recurse.com/calendar
+
+Need to login. Headless browser? Selenium?
+
+# sequence
+
+    $ vi sequence.pu
+    @startuml
+    participant "Web browser" as B
+    participant "www.recurse.com" as S
+
+    B->S: GET /calendar
+    S->B: 302 to /login
+    @enduml
+    $ vi Makefile
+    %.png: %.pu
+    	plantuml $<
+    $ make sequence.png
+    :!cp ../sequence.pu %
+    $ make sequence.png
+
+# scrape
+
+    :r .scrape.mk
+    :w
+    $ make calendar.html
+
+Walk through commands roughly.
+
+    $ less calendar.html
+
+RC.Calendar is interesting.
+
+    $ grep RC.Calendar calendar.html | less
+    $ grep RC.Calendar calendar.html | cut -d\" -f4 | less
+    $ grep RC.Calendar calendar.html | cut -d\" -f4 | grep -o '&[^;]*;'
+    | sort -u
+    | sed -e 's/&quot;/"/g'
+    -e 's/&amp;/\&/g' -e 's/&lt;/</g' -e 's/&gt;/>/g'
+    $ man ascii
+    -e 's/&#39;/'/g'
+    $ grep RC.Calendar calendar.html | cut -d\" -f4 | sed -e 's/&quot;/"/g' -e 's/&amp;/\&/g' -e 's/&lt;/</g' -e 's/&gt;/>/g' -e "s/&#39;/'/g" | less
+    $ make calendar.json
+    $ python -m json.tool calendar.json | less
+    $ python -m json.tool calendar.json | grep -e Sammet -e Hopper -e Turing -e Presentation
+    | sort | uniq
+    -c
+    | sort -n | tail -n4
+
+    locations.txt: calendar.json
+    	python -m json.tool calendar.json | grep -e Sammet -e Hopper -e Turing -e Presentation | sort | uniq -c | sort -n | tail -n4 > locations.txt
+
+# graphviz
+
+Useful to visualize make files as dependency graph.
+
+    %.png: %.dot
+    	dot -Tpng -o $@ $<
+    :e dependencies.dot
+    :v/: /d
+    :%s/:/ ->/
+    ysiW"
+    $ make dependencies.png
+
+Dependency graph visualizes relationship between outputs and inputs.
+
+# slides
+
+We were promised a presentation!
+
+    :r .slides.mk
+    $ make slides.pdf
+    $ xdg-open slides.pdf
+
+# http
+
+Share with a friend!
+
+    $ python3 -m http.server
+
+# conclusion
+
+What was the point? Show a couple things you might have expected.
+Next time you think about spending 20 minutes writing throwaway code,
+maybe you can just cobble together a couple CLI tools.
