@@ -1,5 +1,4 @@
 convert a.jpg -level 25%,45% a.png
-convert b.jpg -level 25%,45% b.png
 make b.png
 cat seq.pu
 make seq.png
@@ -16,4 +15,4 @@ python -m json.tool calendar.json | grep -e Sammet -e Hopper -e Turing -e Presen
 make dep.png
 make slides.pdf
 xdg-open slides.pdf
-python3 -m http.server
+make server
