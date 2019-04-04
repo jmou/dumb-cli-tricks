@@ -34,7 +34,7 @@ locations.txt: calendar.json
 %.pdf: %.png
 	convert $< $@
 
-slides.pdf: IMG_4363.pdf IMG_4365.pdf sequence.pdf Makefile.pdf dependencies.pdf locations.pdf IMG_4370.pdf IMG_4371.pdf
+slides.pdf: a.pdf b.pdf seq.pdf Makefile.pdf dep.pdf locations.pdf y.pdf z.pdf
 	pdfunite $^ $@
 
 clean:

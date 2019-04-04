@@ -1,31 +1,15 @@
 @startuml
 scale 3
-hide footbox
 title Scraping RC Calendar For Fun And Profit
-
 participant "Web browser" as B
 participant "www.recurse.com" as S
-
 B->S: GET /calendar
-activate B
-activate S
 S->B: 302 to /login
-deactivate S
 B->S: GET /login
-activate S
 S->B: 200 with CSRF token
-deactivate S
-deactivate B
-
+|||
 B->S: POST /session\n(with CSRF token)
-activate B
-activate S
 S->B: 302 /calendar
-deactivate S
 B->S: GET /calendar
-activate S
 S->B: 200 with the goods
-deactivate S
-deactivate B
-
 @enduml
