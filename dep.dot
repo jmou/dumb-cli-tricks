@@ -1,5 +1,4 @@
 digraph G {
-    "sequence.png" -> "sequence.pu";
     "csrf.txt" -> "login.html";
     "calendar.html" -> { "cookies.txt" "csrf.txt" password };
     "calendar.json" -> "calendar.html";

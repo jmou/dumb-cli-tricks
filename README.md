@@ -25,3 +25,5 @@ To run the HTTP server:
 ```
 $ make server
 ```
+
+If you have any thoughts or questions I'd love to hear!

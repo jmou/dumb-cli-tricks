@@ -89,7 +89,7 @@ server: slides.pdf
 # This will delete any generated files! This is helpful when running `make`
 # multiple times.
 clean:
-	git clean -fx -e password
+	git clean -fx -e rawpassword
 
 # "Phony" rules don't actually create any output files. They are used as
 # convenient ways to run commands related to the build.
